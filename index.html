@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sistem Generator ID Card Panitia Otomatis - Aplikasi web untuk membuat ID card panitia secara instan">
+    <title>Generator ID Card Panitia</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1>ID Card Panitia Generator</h1>
+                <p class="subtitle">Sistem otomatis pembuatan kartu tanda pengenal panitia</p>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- Left Panel: Form Control Input -->
+            <div class="form-panel">
+                <div class="form-container">
+                    <h2>Buat ID Card Anda</h2>
+                    <p class="instruction-text">Isi formulir di bawah untuk membuat ID Card panitia Anda</p>
+
+                    <form id="idCardForm" class="form">
+                        <!-- Nama Lengkap Input -->
+                        <div class="form-group">
+                            <label for="fullName">Nama Lengkap *</label>
+                            <input 
+                                type="text" 
+                                id="fullName" 
+                                name="fullName" 
+                                maxlength="40"
+                                placeholder="Masukkan nama lengkap (maksimal 40 karakter)"
+                                required
+                            >
+                            <small class="char-count"><span id="nameCharCount">0</span>/40</small>
+                        </div>
+
+                        <!-- Divisi Dropdown -->
+                        <div class="form-group">
+                            <label for="division">Divisi Kepanitiaan *</label>
+                            <select id="division" name="division" required>
+                                <option value="">-- Pilih Divisi --</option>
+                                <option value="BPH">Badan Pengurus Harian (BPH)</option>
+                                <option value="Acara">Divisi Acara</option>
+                                <option value="Humas">Divisi Humas & Media</option>
+                                <option value="Pubdok">Divisi Publikasi & Dokumentasi</option>
+                                <option value="Logistik">Divisi Logistik</option>
+                                <option value="Konsumsi">Divisi Konsumsi</option>
+                                <option value="Sponsorship">Divisi Sponsorship</option>
+                                <option value="Acara Khusus">Divisi Acara Khusus</option>
+                            </select>
+                        </div>
+
+                        <!-- Foto Upload -->
+                        <div class="form-group">
+                            <label for="photoUpload">Unggah Foto Pas (*.png, *.jpg, *.jpeg) *</label>
+                            <div class="file-upload-wrapper">
+                                <input 
+                                    type="file" 
+                                    id="photoUpload" 
+                                    name="photo" 
+                                    accept=".png,.jpg,.jpeg,image/png,image/jpeg"
+                                    required
+                                >
+                                <label for="photoUpload" class="file-upload-label">
+                                    <span class="upload-icon">📷</span>
+                                    <span class="upload-text">Klik untuk memilih foto</span>
+                                    <span class="upload-hint">(PNG, JPG, JPEG)</span>
+                                </label>
+                                <div id="photoInfo" class="photo-info" style="display: none;">
+                                    <span id="photoFileName"></span>
+                                    <button type="button" id="clearPhotoBtn" class="clear-btn">✕</button>
+                                </div>
+                            </div>
+                            <small class="error-message" id="photoError" style="display: none;"></small>
+                        </div>
+
+                        <!-- Generate Button -->
+                        <button type="button" id="generateBtn" class="btn btn-primary btn-large">
+                            Buat ID Card
+                        </button>
+
+                        <!-- Download Button (Hidden by default) -->
+                        <button type="button" id="downloadBtn" class="btn btn-success btn-large" style="display: none;">
+                            ⬇️ Unduh ID Card (PNG)
+                        </button>
+
+                        <!-- Reset Button -->
+                        <button type="reset" class="btn btn-secondary btn-small">
+                            Reset Form
+                        </button>
+                    </form>
+
+                    <div class="info-box">
+                        <h3>ℹ️ Informasi Penting</h3>
+                        <ul>
+                            <li>Data disimpan di perangkat Anda (tidak ada upload ke server)</li>
+                            <li>Proses rendering berlangsung cepat (< 2 detik)</li>
+                            <li>Foto akan dipotong otomatis sesuai ukuran kotak ID card</li>
+                            <li>Hasil download dalam format PNG beresolusi tinggi</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel: Live Preview Box -->
+            <div class="preview-panel">
+                <div class="preview-container">
+                    <h2>Pratinjau ID Card</h2>
+                    <div class="preview-wrapper">
+                        <canvas 
+                            id="idCardCanvas" 
+                            class="preview-canvas"
+                            width="1024"
+                            height="640"
+                        ></canvas>
+                        <div id="placeholderMessage" class="placeholder-message">
+                            <p>📋 Isi formulir di sebelah kiri dan klik "Buat ID Card"</p>
+                            <p>untuk melihat pratinjau di sini</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2026 ID Card Panitia Generator </p>
+        </footer>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
